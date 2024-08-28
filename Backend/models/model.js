@@ -2,8 +2,6 @@ const mongoose = require('mongoose');
 const userSchema = new mongoose.Schema({
     email:{
         type:String,
-        index:true,
-        unique:true,
         required:true
     },
     password:{
@@ -12,5 +10,5 @@ const userSchema = new mongoose.Schema({
     }
 })
 
-const chat = mongoose.model('chat',userSchema)
-module.exports=chat
+const user = mongoose.model('user',userSchema)
+module.exports=user
