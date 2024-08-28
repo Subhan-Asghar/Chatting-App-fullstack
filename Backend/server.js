@@ -1,15 +1,15 @@
 const express = require('express')
 const mongoose = require('mongoose');
-const router =require('./routes/routes.js')
+const router=require('./routes/user_route')
 const app = express()
 const port = 3000
-// Middleware
+//Middleware
 app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
-
-mongoose.connect('mongodb://127.0.0.1:27017/chat')
+//Mongodb
+mongoose.connect('mongodb://localhost:27017/library')
   .then(() => console.log('Connected!'));
 app.use('/',router)
+
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
