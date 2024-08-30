@@ -1,11 +1,11 @@
 const express = require('express')
 const user=require('../models/user')
 const router=express.Router()
-router.post('/register',(req,res)=>{
+router.post('/register',async(req,res)=>{
     const {name,email,password}=req.body
-    const data=user.findOne({email})
-    if(data==''){
-        user.create({
+    const result= await user.findOne({email})
+    if(result==null){
+        await user.create({
             name,
             email,
             password
@@ -15,7 +15,7 @@ router.post('/register',(req,res)=>{
         })
     }
     else{
-        res.status(404).json({
+        res.status(401).json({
             message:"User Already Exist"
         })
     }
@@ -23,16 +23,15 @@ router.post('/register',(req,res)=>{
 })
 
 
-router.post('/login',(req,res)=>{
+router.post('/login',async(req,res)=>{
     const {name,email,password}=req.body
-    const data=user.findOne({email})
-   
-     if(data==''){
-        res.status(404).json({
+    const result=await user.findOne({email})
+     if(!result){
+        res.status(401).json({
             message:"User Don't  Exist"
         })
     }
-    else if(data.password==password){
+    else if(result.password==password){
 
         res.status(200).json({
             message:"User Login",
@@ -41,7 +40,7 @@ router.post('/login',(req,res)=>{
         })
     }
     else{
-        res.status(404).json({
+        res.status(401).json({
             message:"Incorrect Password"
         })
     }
