@@ -1,14 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useState,useContext } from 'react';
-import usercontext from "../context/user_context";
 import axios from 'axios'
+import usercontext from '../context/user_context';
 
 const Login = () => {
     const [email, setemail] = useState('')
     const [password, setpassword] = useState('')
     const [message, setmessage] = useState('')
-    const { setuser } = useContext(usercontext); 
+    const { setuser,setname } = useContext(usercontext); 
+
+
     const user_login=async ()=>{
         
         try {
@@ -20,6 +22,7 @@ const Login = () => {
             const response = await axios.post('http://localhost:3000/login', data);
             const result=response.data.message
             setmessage(result)
+            setname(response.data.name) 
             if (result === "User Login") {
               setuser(true);
             }

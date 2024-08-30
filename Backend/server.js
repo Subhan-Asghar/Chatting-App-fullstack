@@ -33,21 +33,22 @@ let users = {};
 io.on('connection', (socket) => {
   console.log(`User connected: ${socket.id}`);
 
-  
-  socket.on('join', (username) => {
-    users[socket.id] = username; 
-    console.log(`${username} has joined the chat.`);
+  socket.on('join', (name) => {
+    users[socket.id] = name; 
+    console.log(`${name} has joined the chat.`);
+    io.emit('user-joined', { id: socket.id, name }); // Notify other users
   });
-
 
   socket.on('message', (data) => {
     console.log(`Message received: ${data}`);
-    
     io.emit('message', data);
   });
 
   socket.on('disconnect', () => {
     console.log(`User disconnected: ${socket.id}`);
+    const name = users[socket.id];
+    delete users[socket.id];
+    io.emit('user-left', { id: socket.id, name }); // Notify other users
   });
 });
 

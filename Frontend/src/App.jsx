@@ -6,10 +6,11 @@ import Chat from "./pages/Chat";
 import { useState } from "react";
 function App() {
 const [user, setuser] = useState(false)
+const [name, setname] = useState('')
 
   return (
     <>
-    <usercontext.Provider value={{user,setuser}}>
+    <usercontext.Provider value={{user,setuser,name,setname}}>
       <Routes>
         <Route path="/register" element={<Register/>}></Route>
         <Route path="/"element={user ? <Chat /> : <Login />} />

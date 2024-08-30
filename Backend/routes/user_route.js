@@ -35,7 +35,7 @@ router.post('/login',async(req,res)=>{
 
         res.status(200).json({
             message:"User Login",
-            name:name
+            name:result.name
 
         })
     }
