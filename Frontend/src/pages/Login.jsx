@@ -27,7 +27,7 @@ const Login = () => {
               setuser(true);
             }
            
-        } catch (error) {
+        } catch (err) {
             console.error('Error:', err);
         }
     };

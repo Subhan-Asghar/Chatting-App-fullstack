@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 import { useState,useEffect } from 'react';
 import axios from 'axios'
 
@@ -8,6 +8,7 @@ const Register = () => {
     const [password, setpassword] = useState('')
     const [name, setname] = useState('')
     const [message, setmessage] = useState('')
+    const navigate=useNavigate()
     const user_register=async ()=>{
         
         try {
@@ -18,7 +19,11 @@ const Register = () => {
             };
 
             const response = await axios.post('http://localhost:3000/register', data);
-            setmessage(response.data.message)
+            const result=response.data.message
+            setmessage(result)
+            if(result=="User Created"){
+              navigate('/')
+            }
         } catch (error) {
             console.error('Error:', err);
         }
